@@ -5,7 +5,151 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="./output.css" rel="stylesheet" />
   </head>
-  <body>
-    <h1 class="text-3xl font-bold underline bg-amber-400 ">Hello world!</h1>
+  <body class="bg-[#f3f3f3] text-[#444]">
+    <nav class="flex py-[20px] px-[40px] justify-between items-center">
+      <p class="font-semibold text-xl">Log in to get started</p>
+      <div class="size-[50px]"><img src="logo.png" alt="" /></div>
+      <div class="flex space-x-2">
+        <input
+          class="w-[100px] bg-white text-lg px-2 py-2 text-center rounded-full"
+          type="text"
+          placeholder="user"
+        />
+        <input
+          class="w-[100px] bg-white text-lg px-2 py-2 text-center rounded-full"
+          type="text"
+          placeholder="PIN"
+        />
+        <div class="cursor-pointer text-2xl px-2 pt-1 rounded-sm">&rarr;</div>
+      </div>
+    </nav>
+
+    <main class="mt-10 px-4">
+      <div class="max-w-[1000px] mx-auto">
+        <div class="flex justify-between mb-10">
+          <div>
+            <h3 class="text-2xl font-semibold">Current balance</h3>
+            <p>As of <span>05/03/2037</span></p>
+          </div>
+
+          <div class="text-4xl">3840EUR</div>
+        </div>
+
+        <div class="flex space-x-6 flex-wrap">
+
+          <div class="flex-1 min-w-[400px] bg-white rounded-t-xl">
+            <div
+              class="flex items-center justify-between px-8 py-4 border-b border-gray-400"
+            >
+              <div
+                class="bg-gradient-to-tl from-[#39b385] to-[#9be15d] uppercase text-white rounded-full text-sm py-0.5 px-1.5"
+              >
+                <p>8 deposit</p>
+              </div>
+
+              <div class="text-[1.7rem] ml-auto"><p>1300$</p></div>
+            </div>
+          </div>
+
+          <div class="flex-1 sm:max-w-[420px] space-y-6">
+            <div
+              class="rounded-sm text-[#333] py-[1rem] px-[2rem] bg-gradient-to-tl from-[#ffb003] to-[#ffcb03]"
+            >
+              <p class="mb-[1.5rem] text-[20px] font-semibold text-[#333]">
+                Transfer money
+              </p>
+
+              <div class="flex space-x-2 items-start">
+                <div>
+                  <input
+                    type="text"
+                    class="bg-white/40 text-center outline-none rounded-sm text-[#333] py-[4px] px-2 w-full"
+                  />
+                  <p class="text-center">Transfer to</p>
+                </div>
+
+                <div>
+                  <input
+                    type="number"
+                    class="bg-white/40 text-center outline-none rounded-sm text-[#333] py-[4px] px-2 w-full"
+                  />
+                  <p class="text-center">Transfer to</p>
+                </div>
+
+                <div
+                  class="cursor-pointer bg-white hover:bg-white/80 text-2xl px-2 rounded-sm"
+                >
+                  &rarr;
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="rounded-sm text-[#333] py-[1rem] px-[2rem] bg-gradient-to-tl from-[#39b385] to-[#9be15d]"
+            >
+              <p class="mb-[1.5rem] text-[20px] font-semibold text-[#333]">
+                Transfer money
+              </p>
+
+              <div class="flex space-x-2 items-start">
+                <div>
+                  <input
+                    type="text"
+                    class="bg-white/40 text-center outline-none rounded-sm text-[#333] py-[4px] px-2 w-full"
+                  />
+                  <p class="text-center">Transfer to</p>
+                </div>
+
+                <div
+                  class="cursor-pointer bg-white hover:bg-white/80 text-2xl px-2 rounded-sm"
+                >
+                  &rarr;
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="rounded-sm text-[#333] py-[1rem] px-[2rem] bg-gradient-to-tl from-[#e52a5a] to-[#ff585f]"
+            >
+              <p class="mb-[1.5rem] text-[20px] font-semibold text-[#333]">
+                Transfer money
+              </p>
+
+              <div class="flex space-x-2 items-start">
+                <div>
+                  <input
+                    type="text"
+                    class="bg-white/40 text-center outline-none rounded-sm text-[#333] py-[4px] px-2 w-full"
+                  />
+                  <p class="text-center">Transfer to</p>
+                </div>
+
+                <div>
+                  <input
+                    type="number"
+                    class="bg-white/40 text-center outline-none rounded-sm text-[#333] py-[4px] px-2 w-full"
+                  />
+                  <p class="text-center">Transfer to</p>
+                </div>
+
+                <div
+                  class="cursor-pointer bg-white hover:bg-white/80 text-2xl px-2 rounded-sm"
+                >
+                  &rarr;
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex justify-between mt-3">
+          <div class="flex space-x-2">
+            <p class="font-semibold">IN <span class="">5020$</span></p>
+            <p class="font-semibold">OUT <span>5020$</span></p>
+            <p class="font-semibold">INTEREST <span>59$</span></p>
+          </div>
+        </div>
+      </div>
+    </main>
   </body>
 </html>

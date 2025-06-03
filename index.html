@@ -70,7 +70,7 @@
                 <p class="font-semibold text-sm">INTEREST <span id="interest" class="text-[#66c873] text-lg">0€</span></p>
               </div>
 
-              <div><p>&downarrow; SORT</p></div>
+              <div id="sortMovements" class="cursor-pointer"><p>&downarrow; SORT</p></div>
             </div>
 
           </div>
@@ -123,23 +123,26 @@
                 class="rounded-sm text-[#333] py-[1rem] px-[2rem] bg-gradient-to-tl from-[#39b385] to-[#9be15d]"
               >
                 <p class="mb-[1.5rem] text-[20px] font-semibold text-[#333]">
-                  Transfer money
+                  Request Loan
                 </p>
 
                 <div class="flex space-x-2 items-start">
+                  <form >
                   <div>
                     <input
+                    id="inputLoanAmount"
                       type="text"
                       class="bg-white/40 text-center outline-none rounded-sm text-[#333] py-[4px] px-2 w-full"
                     />
-                    <p class="text-center">Transfer to</p>
+                    <p class="text-center">Amount</p>
                   </div>
 
-                  <div
+                  <button id="requestLoanBtn"
                     class="cursor-pointer bg-white hover:bg-white/80 text-2xl px-2 rounded-sm"
                   >
                     &rarr;
-                  </div>
+                  </button>
+                  </form>
                 </div>
               </div>
 
@@ -151,9 +154,11 @@
                   Close Account
                 </p>
 
+                <form >
                 <div class="flex space-x-2 items-start">
                   <div>
                     <input
+                    id="closeACCUser"
                       type="text"
                       class="bg-white/40 text-center outline-none rounded-sm text-[#333] py-[4px] px-2 w-full"
                     />
@@ -162,19 +167,21 @@
 
                   <div>
                     <input
+                    id="closeAccPin"
                       type="number"
                       class="bg-white/40 text-center outline-none rounded-sm text-[#333] py-[4px] px-2 w-full"
                     />
                     <p class="text-center">Confirm Pin</p>
                   </div>
 
-                  <div
+                  <button id="closeAccBtn"
                     class="cursor-pointer bg-white hover:bg-white/80 text-2xl px-2 rounded-sm"
                   >
                     &rarr;
-                  </div>
+                  </button>
 
                 </div>
+                </form>
 
               </div>
 

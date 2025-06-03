@@ -51,6 +51,12 @@ const transactionDIV = document.querySelector("#transactions");
 const btnTransfer = document.querySelector("#btnTransfer");
 const transferToName = document.querySelector("#transferToName");
 const transferAmount = document.querySelector("#transferAmount");
+const closeAccBtn = document.querySelector("#closeAccBtn");
+const closeACCUser = document.querySelector("#closeACCUser");
+const closeAccPin = document.querySelector("#closeAccPin");
+const requestLoanBtn = document.querySelector("#requestLoanBtn");
+const inputLoanAmount = document.querySelector("#inputLoanAmount");
+const sortMovements = document.querySelector("#sortMovements");
 
 let currentUser;
 // let currentBalance;
@@ -85,12 +91,14 @@ const summaryDisplay = function (account) {
   // console.log(IN);
 };
 
-const displayTransaction = function (movements) {
+const displayTransaction = function (movements, bool = false) {
   transactionDIV.textContent = "";
+
+  const moves = bool ? [...movements].sort((a, b) => a - b) : movements;
 
   let htmlString;
 
-  movements.forEach((cur, i) => {
+  moves.forEach((cur, i) => {
     if (cur > 0) {
       htmlString = `<div
                             class="flex items-center justify-between px-8 py-4 border-b border-gray-200">
@@ -101,7 +109,7 @@ const displayTransaction = function (movements) {
                             } deposit</p>
                             </div>
 
-                            <div class="ml-auto"><p>${cur}€</p></div>
+                            <div class="ml-auto"><p>${Math.abs(cur)}€</p></div>
                          </div>`;
     } else {
       htmlString = `<div
@@ -113,7 +121,7 @@ const displayTransaction = function (movements) {
                             } deposit</p>
                             </div>
 
-                            <div class="ml-auto"><p>${cur}€</p></div>
+                            <div class="ml-auto"><p>${Math.abs(cur)}€</p></div>
                          </div>`;
     }
 
@@ -121,13 +129,27 @@ const displayTransaction = function (movements) {
   });
 };
 
+let bool = true;
+
 // TO DISPLAY AND UPDATE THE CHANGES
 const updateUI = function (account) {
-  currentUserBalance.textContent = `${balanceFun(account)}€`;
+  if (loggedIn) {
+    currentUserBalance.textContent = `${balanceFun(account)}€`;
 
-  summaryDisplay(currentUser);
+    summaryDisplay(currentUser);
 
-  displayTransaction(account.movements);
+    displayTransaction(account.movements);
+
+    bool = !bool
+  } else {
+    currentUserBalance.textContent = `05€`;
+    currentUser = "";
+    displayTransaction([0]);
+    deposit.textContent = `05€`;
+    withdraw.textContent = `05€`;
+    interestdisplay.textContent = `05€`;
+  }
+
 };
 
 loginBTN.addEventListener("click", (e) => {
@@ -142,7 +164,7 @@ loginBTN.addEventListener("click", (e) => {
 
     currentUser.balance = balanceFun(currentUser);
 
-    updateUI(currentUser);
+    updateUI(currentUser, bool);
   } else {
     console.log("not found");
     console.log(currentUser);
@@ -152,11 +174,16 @@ loginBTN.addEventListener("click", (e) => {
   inputPIN.blur();
 });
 
+// Event Handlers
+
+// Transfer Account
 btnTransfer.addEventListener("click", (e) => {
   e.preventDefault();
   const amount = Number(transferAmount.value);
 
-  const getTransferAcoount = accounts.find(acc => acc.username === transferToName.value);
+  const getTransferAcoount = accounts.find(
+    (acc) => acc.username === transferToName.value
+  );
 
   if (
     getTransferAcoount &&
@@ -165,9 +192,8 @@ btnTransfer.addEventListener("click", (e) => {
     amount <= currentUser.balance &&
     currentUser.username !== transferToName.value
   ) {
-
     currentUser.movements.push(-amount);
-    getTransferAcoount.movements.push(amount)
+    getTransferAcoount.movements.push(amount);
 
     updateUI(currentUser);
 
@@ -177,4 +203,54 @@ btnTransfer.addEventListener("click", (e) => {
 
   transferToName.value = transferAmount.value = "";
   transferAmount.blur();
+});
+
+// Close Account
+closeAccBtn.addEventListener("click", (e) => {
+  e.preventDefault();
+  // alert("deleted")
+
+  const user = closeACCUser.value;
+  const pin = closeAccPin.value;
+
+  if (loggedIn && currentUser.username === user && currentUser.pin === pin) {
+    alert("yeah");
+
+    const index = accounts.findIndex((acc) => acc.username === user);
+
+    console.log(index);
+
+    accounts.splice(index, 1);
+
+    loggedIn = false;
+
+    updateUI(currentUser, bool);
+  }
+
+  closeACCUser.value = closeAccPin.value = "";
+});
+
+// Request Loan
+requestLoanBtn.addEventListener("click", (e) => {
+  e.preventDefault();
+  const inputLoan = Number(inputLoanAmount.value);
+  const average = currentUser.movements.some((mov) => mov > inputLoan / 10);
+  if (loggedIn && average) {
+    // alert(`${inputLoan} ${average}`);
+
+    currentUser.movements.push(inputLoan);
+
+    updateUI(currentUser);
+  }
+
+  inputLoanAmount.value = "";
+});
+
+
+// sorting function
+sortMovements.addEventListener("click", () => {
+  if (loggedIn) {
+    displayTransaction(currentUser.movements, !bool);
+    bool = !bool;
+  }
 });

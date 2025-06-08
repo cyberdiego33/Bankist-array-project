@@ -254,3 +254,5 @@ sortMovements.addEventListener("click", () => {
     bool = !bool;
   }
 });
+
+

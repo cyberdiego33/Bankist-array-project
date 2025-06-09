@@ -65,7 +65,7 @@ let loggedIn;
 // BALANCE DISPLAY FUNCTION
 const balanceFun = function (account = currentUser) {
   const balance = account.movements.reduce((acc, cur) => acc + cur);
-  return balance;
+  return balance.toFixed(2);
 };
 
 // SUMMARY DISPLAY FUNCTION
@@ -84,9 +84,9 @@ const summaryDisplay = function (account) {
     .filter((dep) => dep >= 1)
     .reduce((acc, cur) => acc + cur);
 
-  deposit.textContent = `${IN}€`;
-  withdraw.textContent = `${Math.abs(OUT)}€`;
-  interestdisplay.textContent = `${Math.abs(interest)}€`;
+  deposit.textContent = `${IN.toFixed(2)}€`;
+  withdraw.textContent = `${Math.abs(OUT).toFixed(2)}€`;
+  interestdisplay.textContent = `${interest.toFixed(2)}€`;
 
   // console.log(IN);
 };

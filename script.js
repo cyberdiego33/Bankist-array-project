@@ -109,7 +109,7 @@ const displayTransaction = function (movements, bool = false) {
                             } deposit</p>
                             </div>
 
-                            <div class="ml-auto"><p>${Math.abs(cur)}€</p></div>
+                            <div class="ml-auto"><p>${cur.toFixed(2)}€</p></div>
                          </div>`;
     } else {
       htmlString = `<div

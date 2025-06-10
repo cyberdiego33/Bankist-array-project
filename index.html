@@ -35,7 +35,7 @@
         <div class="flex justify-between mb-10">
           <div>
             <h3 class="text-2xl font-semibold">Current balance</h3>
-            <p>As of <span>05/03/2037</span></p>
+            <p>As of <span id="balanceDate">05/03/2037</span></p>
           </div>
 
           <div id="current-digit" class="text-4xl">0€</div>
@@ -51,9 +51,12 @@
               <!-- INDIVIDUAL MOVEMENT  -->
               <div
                 class="flex items-center justify-between px-8 py-4 border-b border-gray-200">
+                <div class="flex space-x-2">
                 <div
                   class="bg-gradient-to-tl from-[#39b385] to-[#9be15d] uppercase text-white rounded-full py-0.5 px-1.5">
                   <p class="text-[10px] font-semibold">0 deposit</p>
+                </div>
+                  <span id="movementdate">05/03/2037</span>
                 </div>
 
                 <div class="ml-auto"><p>0€</p></div>

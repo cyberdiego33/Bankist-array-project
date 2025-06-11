@@ -121,7 +121,7 @@ const balanceFun = function (account = currentUser) {
 };
 
 //BALANCE DATE FUNCTION
-const balDate = function (acc) {
+const balDate = function (acc, locale) {
 
   const calcDaysPast = function(date1, date2) {
     return Math.round(Math.abs(date1 - date2) / (1000 * 60 * 60 * 24));
@@ -137,13 +137,9 @@ const balDate = function (acc) {
   else if (getDate <= 7) return `${getDate} Days Ago`;
 
   else {
-  const day = `${date.getDate()}`.padStart(2, 0);
-  const month = `${date.getMonth() + 1}`.padStart(2, 0);
-  const year = date.getFullYear();
-  const hour = date.getHours();
-  const min = date.getMinutes();
+  const day = new Intl.DateTimeFormat(locale).format(date);
 
-  return `${day}/${month}/${year}`;
+  return day;
   }
 }
 
@@ -179,7 +175,7 @@ const displayTransaction = function (account, bool = false) {
 
   moves.forEach((cur, i) => {
 
-    const movDate = balDate(account.movementsDates[i])
+    const movDate = balDate(account.movementsDates[i],  account.locale)
 
     if (cur > 0) {
       htmlString = `<div
@@ -222,8 +218,19 @@ let bool = true;
 // TO DISPLAY AND UPDATE THE CHANGES
 const updateUI = function (account) {
   if (loggedIn) {
+
+    const option = {
+      year: 'numeric',
+      month: 'numeric',
+      day: '2-digit',
+      minute: 'numeric',
+      hour: 'numeric',
+      // weekday: 'short'
+    }
+
+
     currentUserBalance.textContent = `${balanceFun(account)}€`;
-    balanceDate.textContent = balDate(account.movementsDates[0])
+    balanceDate.textContent = new Intl.DateTimeFormat(currentUser.locale, option).format(new Date());
 
     summaryDisplay(currentUser);
 
@@ -350,4 +357,19 @@ sortMovements.addEventListener("click", () => {
   }
 });
 
+const option = {
+  hour: 'numeric',
+  minute: '2-digit',
+  // year: 'numeric',
+  // month: 'short',
+  // day: '2-digit',
+  weekday: 'long',
+}
+
+
+const now = new Date();
+const formatDate = new Intl.DateTimeFormat('en-US', option).format(now);
+
+
+console.log(formatDate);
 

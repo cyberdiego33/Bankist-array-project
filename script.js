@@ -6,14 +6,14 @@ const account1 = {
   pin: "1111",
 
   movementsDates: [
-    '2019-11-18T21:31:17.178Z',
-    '2019-12-23T07:42:02.383Z',
-    '2020-01-28T09:15:04.904Z',
-    '2020-04-01T10:17:24.185Z',
-    '2020-05-08T14:11:59.604Z',
-    '2020-05-27T17:01:17.194Z',
-    '2020-07-11T23:36:17.929Z',
-    '2020-07-12T10:51:36.790Z',
+    '2024-06-18T21:31:17.178Z',
+    '2024-06-23T07:42:02.383Z',
+    '2025-01-28T09:15:04.904Z',
+    '2025-04-01T10:17:24.185Z',
+    '2025-05-08T14:11:59.604Z',
+    '2025-05-27T17:01:17.194Z',
+    '2025-06-10T23:36:17.929Z',
+    '2025-06-11T10:51:36.790Z',
   ],
   currency: 'EUR',
   locale: 'pt-PT', // de-DE
@@ -26,14 +26,14 @@ const account2 = {
   pin: "2222",
 
   movementsDates: [
-    '2019-11-01T13:15:33.035Z',
-    '2019-11-30T09:48:16.867Z',
-    '2019-12-25T06:04:23.907Z',
-    '2020-05-08T14:11:59.604Z',
-    '2020-05-27T17:01:17.194Z',
-    '2020-06-25T18:49:59.371Z',
-    '2020-07-26T12:01:20.894Z',
-    '2020-07-12T10:51:36.790Z',
+    '2024-11-01T13:15:33.035Z',
+    '2024-12-30T09:48:16.867Z',
+    '2024-12-25T06:04:23.907Z',
+    '2025-05-08T14:11:59.604Z',
+    '2025-05-27T17:01:17.194Z',
+    '2025-06-08T18:49:59.371Z',
+    '2025-06-10T12:01:20.894Z',
+    '2025-06-11T10:51:36.790Z',
   ],
   currency: 'USD',
   locale: 'en-US',
@@ -46,14 +46,14 @@ const account3 = {
   pin: "3333",
 
   movementsDates: [
-    '2019-11-01T13:15:33.035Z',
-    '2019-11-30T09:48:16.867Z',
-    '2019-12-25T06:04:23.907Z',
-    '2020-01-25T14:18:46.235Z',
-    '2020-02-05T16:33:06.386Z',
-    '2020-04-10T14:43:26.374Z',
-    '2020-06-25T18:49:59.371Z',
-    '2020-07-26T12:01:20.894Z',
+    '2024-11-01T13:15:33.035Z',
+    '2024-11-30T09:48:16.867Z',
+    '2024-12-25T06:04:23.907Z',
+    '2025-01-25T14:18:46.235Z',
+    '2025-02-05T16:33:06.386Z',
+    '2025-04-10T14:43:26.374Z',
+    '2025-06-04T18:49:59.371Z',
+    '2025-06-09T12:01:20.894Z',
   ],
   currency: 'USD',
   locale: 'en-US',
@@ -66,12 +66,12 @@ const account4 = {
   pin: "4444",
 
   movementsDates: [
-    '2019-11-01T13:15:33.035Z',
-    '2019-11-30T09:48:16.867Z',
-    '2019-12-25T06:04:23.907Z',
-    '2020-05-08T14:11:59.604Z',
-    '2020-05-27T17:01:17.194Z',
-    '2020-06-25T18:49:59.371Z',
+    '2025-05-01T13:15:33.035Z',
+    '2025-05-30T09:48:16.867Z',
+    '2025-05-25T06:04:23.907Z',
+    '2025-06-07T14:11:59.604Z',
+    '2025-06-10T17:01:17.194Z',
+    '2025-06-11T18:49:59.371Z',
   ],
   currency: 'USD',
   locale: 'en-US',
@@ -122,14 +122,29 @@ const balanceFun = function (account = currentUser) {
 
 //BALANCE DATE FUNCTION
 const balDate = function (acc) {
+
+  const calcDaysPast = function(date1, date2) {
+    return Math.round(Math.abs(date1 - date2) / (1000 * 60 * 60 * 24));
+  }
+
   const date = new Date(acc);
+  const getDate = calcDaysPast(new Date(), date);
+
+  if (getDate === 0) return `Today`;
+
+  else if (getDate === 1) return `Yesterday`;
+
+  else if (getDate <= 7) return `${getDate} Days Ago`;
+
+  else {
   const day = `${date.getDate()}`.padStart(2, 0);
-  const month = `${date.getMonth()}`.padStart(2, 0);
+  const month = `${date.getMonth() + 1}`.padStart(2, 0);
   const year = date.getFullYear();
   const hour = date.getHours();
   const min = date.getMinutes();
 
   return `${day}/${month}/${year}`;
+  }
 }
 
 // SUMMARY DISPLAY FUNCTION
@@ -266,8 +281,12 @@ btnTransfer.addEventListener("click", (e) => {
     amount <= currentUser.balance &&
     currentUser.username !== transferToName.value
   ) {
+    const presentTime = new Date().toISOString();
+
     currentUser.movements.push(-amount);
+    currentUser.movementsDates.push(presentTime);
     getTransferAcoount.movements.push(amount);
+    getTransferAcoount.movementsDates.push(presentTime)
 
     updateUI(currentUser);
 
@@ -311,8 +330,10 @@ requestLoanBtn.addEventListener("click", (e) => {
   const average = currentUser.movements.some((mov) => mov > inputLoan / 10);
   if (loggedIn && average) {
     // alert(`${inputLoan} ${average}`);
+    const presentTime = new Date().toISOString();
 
     currentUser.movements.push(inputLoan);
+    currentUser.movementsDates.push(presentTime);
 
     updateUI(currentUser);
   }
